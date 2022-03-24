@@ -6,5 +6,7 @@ import (
 
 func main (){
 	var x int = 2
-	fmt.Println(&x)
-}
+	k := 8
+	fmt.Println(&x, k)
+	}
+
