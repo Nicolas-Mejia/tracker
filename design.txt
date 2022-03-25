@@ -1,0 +1,35 @@
+User:
+	Mail
+	Password
+	Pedidos
+	Mails asociados
+
+	Servicios: Login, Registro
+
+Pedidos:
+	Id
+	Titulo (opcional)
+	Fecha
+	User
+	Tracking Nacional (opcional)
+	Tracking Internacional (opcional)
+	Libros[] (opcional)
+
+Producto?
+Libro:
+	ISBN
+	Nombre
+	Autor
+	Imagen
+	Descripción?
+
+
+Bases de datos no relacionales
+Mensajería asíncrona con colas y consumers
+Golang
+Concurrencia
+API REST
+Testing
+Gitflow
+
+Google Books API?
