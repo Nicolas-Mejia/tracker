@@ -4,10 +4,9 @@ import (
 	"fmt"
 )
 
-func main (){
+func main() {
 	var x int = 2
 	s := 8
-	fmt.Println(&x, s)
-	}
-
-
+	p := &s
+	fmt.Println(&x, p, *p)
+}
