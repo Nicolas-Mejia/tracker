@@ -1,4 +1,4 @@
-package main
+package models
 
 type Libro struct {
 	ISBN        int
