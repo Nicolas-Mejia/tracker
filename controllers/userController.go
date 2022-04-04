@@ -1,11 +1,12 @@
-package main
+package controllers
 
-import "net/http"
-
-func userHandler(w http.ResponseWriter, r *http.Request) {
+import (
+	"fmt"
+	"net/http"
+)
+func UserHandler(w http.ResponseWriter, r *http.Request) {
 	//status http
-	w.WriteHeader(http.StatusOK)
-
+	fmt.Fprintf(w, "que onda pa")
 	return
 }
 
