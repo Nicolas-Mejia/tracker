@@ -1,0 +1,5 @@
+investigar sobre el mod
+
+esconder salt
+check that my endpoints cant be filled with junk (insert a doc with user instead of username as key)
+do not return pass after login (even though its hashed)
