@@ -16,8 +16,10 @@ import (
 var client *mongo.Client
 var ctx context.Context
 var UsersColl *mongo.Collection
+var OrdersColl *mongo.Collection
 
 func main() {
+
 	dbUser := os.Getenv("userTracker")
 	dbPass := os.Getenv("passTracker")
 	dbName := os.Getenv("dbTracker")
@@ -42,6 +44,7 @@ func main() {
 	ctx = context.TODO()
 
 	UsersColl = client.Database("tracker").Collection("users")
+	OrdersColl = client.Database("tracker").Collection("orders")
 
 	// inicializo router
 	router := mux.NewRouter().StrictSlash(true)
@@ -49,6 +52,11 @@ func main() {
 	// endpoints
 	router.HandleFunc("/users/register", userRegister).Methods("POST")
 	router.HandleFunc("/users/login", userLogin).Methods("POST")
+	router.HandleFunc("/orders", createOrder).Methods("POST")
+	router.HandleFunc("/orders", getUserLatestOrders).Methods("GET")
+	router.HandleFunc("/orders/{id}", getOrderDetails).Methods("GET")
+	router.HandleFunc("/orders/{id}", updateOrder).Methods("PUT")
+	router.HandleFunc("/orders/{id}", deleteOrder).Methods("DELETE")
 	http.Handle("/", router)
 
 	log.Fatal(http.ListenAndServe(":8080", router))
