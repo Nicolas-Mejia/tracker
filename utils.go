@@ -27,6 +27,11 @@ func writeStatusForbidden(res http.ResponseWriter, message string) {
 	res.Write([]byte(`{ "message": "` + message + `" }`))
 }
 
+func writeStatusNotFound(res http.ResponseWriter, message string) {
+	res.WriteHeader(http.StatusNotFound)
+	res.Write([]byte(`{ "message": "` + message + `" }`))
+}
+
 func writeStatusConflict(res http.ResponseWriter, message string) {
 	res.WriteHeader(http.StatusConflict)
 	res.Write([]byte(`{ "message": "` + message + `" }`))

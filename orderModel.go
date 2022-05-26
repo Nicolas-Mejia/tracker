@@ -17,13 +17,7 @@ type TrackingUpdate struct {
 	Id   primitive.ObjectID `bson:"_id" json:"_id,omitempty"`
 	Rta  string             `bson:"rta,omitempty"`
 	Code int                `bson:"code,omitempty"`
-	Data struct {
-		Eventos        *[]Evento `bson:"eventos" json:"eventos"`
-		Id             int       `bson:"id" json:"id"`
-		CodigoProducto string    `bson:"codigoProducto" json:"codigoProducto"`
-		CodigoPais     string    `bson:"codigoPais" json:"codigoPais"`
-		Cantidad       int       `bson:"cantidad" json:"cantidad"`
-	} `bson:"data" json:"data"`
+	Data *PackageData       `bson:"data" json:"data"`
 }
 
 type Evento struct {
@@ -33,4 +27,20 @@ type Evento struct {
 	EstadoEntrega   string `bson:"estadoEntrega" json:"estadoEntrega"`
 	MotivoNoEntrega string `bson:"motivoNoEntrega" json:"motivoNoEntrega"`
 	NombrePais      string `bson:"nombrePais" json:"nombrePais"`
+}
+
+type PackageData struct {
+	Eventos        *[]Evento `bson:"eventos" json:"eventos"`
+	Id             int       `bson:"id" json:"id"`
+	CodigoProducto string    `bson:"codigoProducto" json:"codigoProducto"`
+	CodigoPais     string    `bson:"codigoPais" json:"codigoPais"`
+	Cantidad       int       `bson:"cantidad" json:"cantidad"`
+}
+
+type UserPackages struct {
+	Packages       PackageData `bson:"eventos" json:"eventos"`
+	Id             int         `bson:"id" json:"id"`
+	CodigoProducto string      `bson:"codigoProducto" json:"codigoProducto"`
+	CodigoPais     string      `bson:"codigoPais" json:"codigoPais"`
+	Cantidad       int         `bson:"cantidad" json:"cantidad"`
 }

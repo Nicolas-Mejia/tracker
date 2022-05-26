@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/gorilla/mux"
@@ -183,4 +184,48 @@ func deleteOrder(res http.ResponseWriter, req *http.Request) {
 
 	fmt.Println("Deleted: ", result)
 
+}
+
+func getPackageEvents(res http.ResponseWriter, trackingId string) (bool, []Evento) {
+	productCode := trackingId[0:2]
+	idShipping := trackingId[2 : len(trackingId)-2]
+	uri1 := os.Getenv("uriTracking1")
+	uri2 := os.Getenv("uriTracking2")
+	uri3 := os.Getenv("uriTracking3")
+	uri := uri1 + productCode + uri2 + idShipping + uri3
+
+	response, err := http.Get(uri)
+
+	if err != nil {
+		writeInternalServerError(res, err)
+		return false, nil
+	}
+
+	var tu TrackingUpdate
+	if json.NewDecoder(response.Body).Decode(&tu); err != nil {
+		writeInternalServerError(res, err)
+		return false, nil
+	}
+
+	if tu.Data.Cantidad == 0 {
+		writeStatusNotFound(res, "El paquete no tiene movimientos aún")
+		return false, nil
+	}
+
+	e := *tu.Data.Eventos
+
+	return true, e
+}
+
+func getLatestPackageEvent(res http.ResponseWriter, pId string) (bool, Evento) {
+	ok, p := getPackageEvents(res, pId)
+	if !ok {
+		return false, Evento{}
+	} else {
+		return true, p[0]
+	}
+}
+
+func getUserPackages(res http.ResponseWriter, req *http.Request){
+	//array de PackageData
 }
