@@ -53,7 +53,7 @@ func main() {
 	router.HandleFunc("/users/register", userRegister).Methods("POST")
 	router.HandleFunc("/users/login", userLogin).Methods("POST")
 	router.HandleFunc("/orders", createOrder).Methods("POST")
-	router.HandleFunc("/orders", getUserLatestOrders).Methods("GET")
+	router.HandleFunc("/orders", getUserOrders).Methods("GET")
 	router.HandleFunc("/orders/{id}", getOrderDetails).Methods("GET")
 	router.HandleFunc("/orders/{id}", updateOrder).Methods("PUT")
 	router.HandleFunc("/orders/{id}", deleteOrder).Methods("DELETE")

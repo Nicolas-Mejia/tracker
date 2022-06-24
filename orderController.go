@@ -122,20 +122,22 @@ func getOrderDetails(res http.ResponseWriter, req *http.Request) {
 	}
 }
 
-func getUserLatestOrders(res http.ResponseWriter, req *http.Request) {
+func getUserOrders(res http.ResponseWriter, req *http.Request) {
 	var user User
+	fmt.Println("asd",req.Body)
 
 	err := json.NewDecoder(req.Body).Decode(&user)
 	if err != nil {
+
 		writeInternalServerError(res, err)
 		return
 	}
 
 	fmt.Println(user)
 
-	filter := bson.D{primitive.E{Key: "_id", Value: user.Id}}
+	filter := bson.D{primitive.E{Key: "user", Value: user.Id}}
 
-	ok, orderResult := orderFindOneAndDecode(res, filter)
+	ok, orderResult := orderFindAllAndDecode(res, filter)
 	if !ok {
 		return
 	}
@@ -186,7 +188,7 @@ func deleteOrder(res http.ResponseWriter, req *http.Request) {
 
 }
 
-func getPackageEvents(res http.ResponseWriter, trackingId string) (bool, []Evento) {
+func getPackageHistory(res http.ResponseWriter, trackingId string) (bool, []Evento) {
 	productCode := trackingId[0:2]
 	idShipping := trackingId[2 : len(trackingId)-2]
 	uri1 := os.Getenv("uriTracking1")
@@ -217,8 +219,8 @@ func getPackageEvents(res http.ResponseWriter, trackingId string) (bool, []Event
 	return true, e
 }
 
-func getLatestPackageEvent(res http.ResponseWriter, pId string) (bool, Evento) {
-	ok, p := getPackageEvents(res, pId)
+func getLatestPackageHistoryEvent(res http.ResponseWriter, pId string) (bool, Evento) {
+	ok, p := getPackageHistory(res, pId)
 	if !ok {
 		return false, Evento{}
 	} else {
@@ -226,6 +228,6 @@ func getLatestPackageEvent(res http.ResponseWriter, pId string) (bool, Evento) {
 	}
 }
 
-func getUserPackages(res http.ResponseWriter, req *http.Request){
-	//array de PackageData
+func getUserPackages(res http.ResponseWriter, req *http.Request, pageNumber int, userId primitive.ObjectID, onlyActive bool) {
+
 }

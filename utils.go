@@ -93,6 +93,38 @@ func orderFindOneAndDecode(res http.ResponseWriter, filter bson.D) (bool, Order)
 	return true, orderResult
 }
 
+func orderFindAllAndDecode(res http.ResponseWriter, filter bson.D) (bool, []Order) {
+	var orderResults []Order
+	var orderResult Order
+	cursor, err := OrdersColl.Find(ctx, filter)
+	if err != nil {
+		writeInternalServerError(res, err)
+		return false, orderResults
+	}
+
+	for cursor.Next(ctx) {
+		if err := cursor.Decode(&orderResult); err != nil {
+			writeInternalServerError(res, err)
+			return false, orderResults
+		}   
+		orderResults = append(orderResults, orderResult)
+	}
+
+	if err := cursor.Decode(&orderResult); err != nil {
+		// check if the error is ErrNoDocuments, that means there isnt an order with that tracking number.
+		if errors.Is(err, mongo.ErrNoDocuments) {
+			// if err == ErrNoDocuments, then we couldn't find an order with that ID.
+			writeStatusConflict(res, "There are no orders with that ID.")
+			return false, orderResults
+		} else {
+			writeInternalServerError(res, err)
+			return false, orderResults
+		}
+	}
+
+	return true, orderResults
+}
+
 func orderChecks(order Order, res http.ResponseWriter) bool {
 	// pedido nacional o internacional.
 	ok := true
