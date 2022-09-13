@@ -2,15 +2,8 @@ package main
 
 import (
 	"context"
-	"fmt"
-	"log"
-	"net/http"
-	"os"
 
-	"github.com/gorilla/mux"
 	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
-	"go.mongodb.org/mongo-driver/mongo/readpref"
 )
 
 var client *mongo.Client
@@ -19,6 +12,7 @@ var UsersColl *mongo.Collection
 var OrdersColl *mongo.Collection
 
 func main() {
+	/*
 
 	dbUser := os.Getenv("userTracker")
 	dbPass := os.Getenv("passTracker")
@@ -60,5 +54,9 @@ func main() {
 	http.Handle("/", router)
 
 	log.Fatal(http.ListenAndServe(":8080", router))
+
+	*/
+
+	getBookData("atomic habits")
 
 }
