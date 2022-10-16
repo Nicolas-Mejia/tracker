@@ -21,12 +21,12 @@ type TrackingUpdate struct {
 }
 
 type Evento struct {
-	CodigoEvento    string `bson:"codigoEvento" json:"codigoEvento,omitempty"`
-	FechaEvento     string `bson:"fechaEvento" json:"fechaEvento"`
-	Planta          string `bson:"planta" json:"planta"`
-	EstadoEntrega   string `bson:"estadoEntrega" json:"estadoEntrega"`
-	MotivoNoEntrega string `bson:"motivoNoEntrega" json:"motivoNoEntrega"`
-	NombrePais      string `bson:"nombrePais" json:"nombrePais"`
+	Name                string `bson:"codigoEvento" json:"codigoEvento,omitempty"`
+	Date                string `bson:"fechaEvento" json:"fechaEvento"`
+	Location            string `bson:"planta" json:"planta"`
+	Status              string `bson:"estadoEntrega" json:"estadoEntrega"`
+	NotDeliveredBecause string `bson:"motivoNoEntrega" json:"motivoNoEntrega"`
+	Country             string `bson:"nombrePais" json:"nombrePais"`
 }
 
 type PackageData struct {

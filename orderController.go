@@ -203,6 +203,8 @@ func getPackageHistory(res http.ResponseWriter, trackingId string) (bool, []Even
 		return false, nil
 	}
 
+	
+
 	var tu TrackingUpdate
 	if json.NewDecoder(response.Body).Decode(&tu); err != nil {
 		writeInternalServerError(res, err)
